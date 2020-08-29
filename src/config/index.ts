@@ -61,5 +61,9 @@ export default {
   emails: {
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN
-  }
+  },
+  /**
+   * Google Client ID
+   */
+  google_oauth_client_id : process.env.CLIENT_ID,
 };

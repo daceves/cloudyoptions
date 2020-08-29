@@ -1,4 +1,4 @@
-import { IUser } from '../interfaces/IUser';
+import { Guser } from '../interfaces/Guser';
 import mongoose from 'mongoose';
 
 const User = new mongoose.Schema(
@@ -16,16 +16,8 @@ const User = new mongoose.Schema(
       index: true,
     },
 
-    password: String,
-
-    salt: String,
-
-    role: {
-      type: String,
-      default: 'user',
-    },
   },
   { timestamps: true },
 );
 
-export default mongoose.model<IUser & mongoose.Document>('User', User);
+export default mongoose.model<Guser & mongoose.Document>('User', User);
