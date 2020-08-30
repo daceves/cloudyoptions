@@ -4,6 +4,7 @@ import AuthService from '../../services/auth';
 import { IUserInputDTO } from '../../interfaces/IUser';
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
+import { join } from 'lodash';
 
 const route = Router();
 
@@ -21,7 +22,7 @@ export default (app: Router) => {
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger = Container.get('logger');
-      logger.debug('Calling Sign-Up endpoint with body: %o', req.body )
+      logger.debug('Calling Sign-Up endpoint with body: %o', req.body)
       try {
         const authServiceInstance = Container.get(AuthService);
         const { user, token } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
@@ -37,20 +38,38 @@ export default (app: Router) => {
     '/signin',
     celebrate({
       body: Joi.object({
-        email: Joi.string().required(),
-        password: Joi.string().required(),
+        tokenid: Joi.string().required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger = Container.get('logger');
       logger.debug('Calling Sign-In endpoint with body: %o', req.body)
       try {
-        const { email, password } = req.body;
+        //check to see if user exists
+        //If yes -> sign
+        // if no -> Create user -> 
+        
+        //Validate Token with google
+        const { tokenid } = req.body;
         const authServiceInstance = Container.get(AuthService);
-        const { user, token } = await authServiceInstance.SignIn(email, password);
-        return res.json({ user, token }).status(200);
+        const userItems = await authServiceInstance.GoogleVerify(tokenid);
+        if(!userItems.isVerified) {
+          throw new Error('Token did not validate'); 
+        }
+
+        const userObjectStatus = await authServiceInstance.SignIn(userItems);
+        
+        //User existed return session cookie and status 200.
+        if(userObjectStatus == 200) {
+          return res.json({ userItems}).status(200);
+        }
+        //User did not exist, created user sucessfully. return session cookie and 201.
+        if(userObjectStatus == 201) {
+          return res.json({ userItems}).status(201);
+        }
+        
       } catch (e) {
-        logger.error('🔥 error: %o',  e );
+        logger.error('🔥 error: %o', e);
         return next(e);
       }
     },

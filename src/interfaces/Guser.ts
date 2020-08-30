@@ -1,0 +1,28 @@
+export interface GuserPayload {
+    iss: string,
+    azp: string,
+    aud: string,
+    sub: string,
+    email: string,
+    email_verified: boolean,
+    at_hash: string,
+    name: string,
+    picture: string,
+    given_name: string,
+    family_name: string,
+    locale: string,
+    iat: number,
+    exp: number,
+    jti: string,
+  }
+
+  export interface UserItemsFromToken {
+      name: string,
+      email: string,
+      isVerified: boolean
+  }
+
+  export interface Guser {
+      name: string,
+      email: string
+  }
