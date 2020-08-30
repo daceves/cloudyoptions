@@ -66,4 +66,14 @@ export default {
    * Google Client ID
    */
   google_oauth_client_id : process.env.CLIENT_ID,
+  /**
+   * Apigee Credentials
+   */
+  apigeeMgmtConnection: {
+    type: process.env.APIGEE_CONNECTION_TYPE || 'googleapi',
+    username: process.env.APIGEE_CONNECTION_USERNAME,
+    password: process.env.APIGEE_CONNECTION_PASSWORD,
+    mgmtEndpoint: process.env.APIGEE_CONNECTION_MGMT_ENDPOINT
+
+  }
 };
