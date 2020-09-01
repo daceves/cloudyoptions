@@ -3,4 +3,7 @@ export default {
     signUp: 'onUserSignUp',
     signIn: 'onUserSignIn',
   },
+  api: {
+    create: 'onApiCreate'
+  }
 };

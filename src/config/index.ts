@@ -71,9 +71,9 @@ export default {
    */
   apigeeMgmtConnection: {
     type: process.env.APIGEE_CONNECTION_TYPE || 'googleapi',
-    username: process.env.APIGEE_CONNECTION_USERNAME,
-    password: process.env.APIGEE_CONNECTION_PASSWORD,
+    username: process.env.APIGEE_CONNECTION_USERNAME || 'dago.aceves+flash1@gmail.com',
+    password: process.env.APIGEE_CONNECTION_PASSWORD || 'p87G!Ck23',
+    oganizations: process.env.APIGEE_CONNECTION_PASSWORD || 'dagoacevesflash1-eval',
     mgmtEndpoint: process.env.APIGEE_CONNECTION_MGMT_ENDPOINT
-
   }
 };

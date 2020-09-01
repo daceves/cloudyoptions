@@ -1,12 +1,9 @@
 import { Service, Inject } from 'typedi';
-import jwt from 'jsonwebtoken';
-import MailerService from './mailer';
 import config from '../config';
-import argon2 from 'argon2';
-import { randomBytes } from 'crypto';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
 import { EventDispatcher, EventDispatcherInterface } from '../decorators/eventDispatcher';
 import events from '../subscribers/events';
+
 
 @Service()
 /**
@@ -19,7 +16,7 @@ export default class Apps {
       @EventDispatcher() private eventDispatcher: EventDispatcherInterface,
   ) {}
 
-  public async dashboardApps(userInputDTO: IUserInputDTO): Promise<any> {
+  public async dashboardApps(userInputDTO: IUserInputDTO, limit, offset): Promise<any> {
     try {
       return [{name: 'item'}];
     } catch (e) {
